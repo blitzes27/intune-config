@@ -1,4 +1,4 @@
-# Original script by: Jatin-Makhija-sts
+# Original script by: Jatin-Makhija-sys
 # Source: https://github.com/Jatin-Makhija-sys/Powershell-Scripts/blob/master/Intune/Windows%20General/Create%20Desktop%20Shortcuts/Create_Desktop_Shortcuts_Public_Desktop_v1.ps1
 # Modified by: Blitzes27
 # Changes:
