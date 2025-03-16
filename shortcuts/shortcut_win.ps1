@@ -28,7 +28,7 @@ foreach ($App in $Shortcuts) {
     
     # Check if the shortcut already exists
     if (Test-Path -Path $ShortcutFile) {
-        Write-Output "Shortcut for $($App.Name) already exists at $ShortcutFile. Skipping creation."
+        Write-Output "Shortcut for $($App.Name) already exists at $ShortcutFile. Skipping creation." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         continue
     }
     # Check if the target path is a URL
@@ -39,7 +39,7 @@ foreach ($App in $Shortcuts) {
 
     # Check if the target path exists for non-URL shortcuts
     if (-Not $isUrl -and $App.TargetPath -and (-Not (Test-Path -Path $App.TargetPath))) {
-        Write-Output "The target file for $($App.Name) at $($App.TargetPath) does not exist. Skipping shortcut creation."
+        Write-Output "The target file for $($App.Name) at $($App.TargetPath) does not exist. Skipping shortcut creation." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         continue
     }
 
@@ -49,7 +49,7 @@ foreach ($App in $Shortcuts) {
             $ShortcutFile = "$PublicDesktopPath\$($App.Name).url"
             $URLShortcut = "[InternetShortcut]`nURL=$($App.TargetPath)"
             Set-Content -Path $ShortcutFile -Value $URLShortcut
-            Write-Output "Web link for $($App.Name) created successfully at $ShortcutFile."
+            Write-Output "Web link for $($App.Name) created successfully at $ShortcutFile." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         }
         else {
             # Create a .LNK file for applications shortcuts
@@ -58,13 +58,13 @@ foreach ($App in $Shortcuts) {
             $Shortcut.TargetPath = $App.TargetPath
             $Shortcut.WorkingDirectory = [System.IO.Path]::GetDirectoryName($App.TargetPath)
             $Shortcut.Save()
-            Write-Output "Shortcut for $($App.Name) created successfully at $ShortcutFile."
+            Write-Output "Shortcut for $($App.Name) created successfully at $ShortcutFile." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         }
     }
     catch {
         # Handle any errors that occur during the shortcut creation process
-        Write-Output "An error occurred while creating the shortcut for $($App.Name): $_"
+        Write-Output "An error occurred while creating the shortcut for $($App.Name): $_" | Out-File -FilePath "C:\shortcut_log.txt" -Append
     }
 }
 # Output a message when the shortcut creation process is completed
-Write-Output "Shortcut creation process completed."
+Write-Output "Shortcut creation process completed." | Out-File -FilePath "C:\shortcut_log.txt" -Append
