@@ -9,7 +9,7 @@ $Shortcuts = @(
 )
 
 # Get the path to the logged-in user's desktop folder
-$UserDesktopPath = [Environment]::GetFolderPath("Desktop")
+$UserDesktopPath = "C:\Users\Public\Desktop"
 
 # Loop through the shortcuts and remove them if they exist
 foreach ($App in $Shortcuts) {

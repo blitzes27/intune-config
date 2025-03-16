@@ -7,7 +7,7 @@ $Shortcuts = @(
 )
 
 # Path to the public desktop folder
-$UserDesktopPath = [Environment]::GetFolderPath("Desktop")
+$UserDesktopPath = "C:\Users\Public\Desktop"
 
 # Loop through the shortcuts to create
 foreach ($App in $Shortcuts) {
