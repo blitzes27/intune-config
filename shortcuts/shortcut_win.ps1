@@ -6,6 +6,7 @@
 # - Uses Set-Content to create .URL files with [InternetShortcut] format.
 # - Removed WScript.Shell COM object for web links, as it is unnecessary for .URL files.
 # - Program shortcuts (.EXE) still use .LNK files.
+# - Added error handling for shortcut creation process.
 # - Ensured compatibility with Intune deployment.
 
 
