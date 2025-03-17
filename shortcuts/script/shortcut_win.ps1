@@ -14,13 +14,13 @@ $PublicDesktopPath = [Environment]::GetFolderPath("CommonDesktopDirectory")
 # Loop through the shortcuts to create
 foreach ($App in $Shortcuts) {
 
-    # Kontrollera om målsökvägen är en URL
+    # Control if the target path is a URL
     $isUrl = $false
     if ($App.TargetPath -and $App.TargetPath -like "http*") {
         $isUrl = $true
     }
 
-    # Definiera sökvägen till genvägsfilen baserat på om det är en URL eller ej
+    # Define the path to the shortcut file based on whether it's a URL or not
     if ($isUrl) {
         $ShortcutFile = Join-Path -Path $PublicDesktopPath -ChildPath "$($App.Name).url"
     }
@@ -28,13 +28,13 @@ foreach ($App in $Shortcuts) {
         $ShortcutFile = Join-Path -Path $PublicDesktopPath -ChildPath "$($App.Name).lnk"
     }
 
-    # Kontrollera om genvägen redan finns
+    # Control if the shortcut already exists
     if (Test-Path -Path $ShortcutFile) {
         Write-Output "Shortcut for $($App.Name) already exists at $ShortcutFile. Skipping creation." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         continue
     }
 
-    # För icke-URL genvägar, kontrollera att målfilen finns
+    # Control if the target path exists for non-URL shortcuts
     if (-Not $isUrl -and $App.TargetPath -and (-Not (Test-Path -Path $App.TargetPath))) {
         Write-Output "The target file for $($App.Name) at $($App.TargetPath) does not exist. Skipping shortcut creation." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         continue
@@ -42,13 +42,13 @@ foreach ($App in $Shortcuts) {
 
     try {
         if ($isUrl) {
-            # Skapa en .URL-fil för webblänkar
+            # Create a .URL file for web links
             $URLShortcut = "[InternetShortcut]`nURL=$($App.TargetPath)"
             Set-Content -Path $ShortcutFile -Value $URLShortcut
             Write-Output "Web link for $($App.Name) created successfully at $ShortcutFile." | Out-File -FilePath "C:\shortcut_log.txt" -Append
         }
         else {
-            # Skapa en .LNK-fil för applikationsgenvägar
+            # Create a .LNK file for applications shortcuts
             $WScriptShell = New-Object -ComObject WScript.Shell
             $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
             $Shortcut.TargetPath = $App.TargetPath
@@ -62,5 +62,5 @@ foreach ($App in $Shortcuts) {
     }
 }
 
-# Skriv ut ett meddelande när skapandeprocessen är klar
+# Write a completion message to the log file
 Write-Output "Shortcut creation process completed." | Out-File -FilePath "C:\shortcut_log.txt" -Append
