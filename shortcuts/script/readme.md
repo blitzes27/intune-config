@@ -1,4 +1,4 @@
-These scripts create shortcuts on desktop. They are compatible with Intune deployment.
+These scripts create shortcuts on the desktop. They are compatible with Intune deployment.
 
 
 
